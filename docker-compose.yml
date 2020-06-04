@@ -3,7 +3,7 @@ services:
   application:
     container_name: syspass
     image: syspass/syspass:3.1.2
-    restart: unless-stopped
+    restart: always
     expose:
       - "443"
     volumes:
@@ -18,7 +18,7 @@ services:
 
   database:
     container_name: mariadb
-    restart: unless-stopped
+    restart: always
     image: mariadb:10.3
     expose:
       - "3306"
@@ -29,7 +29,7 @@ services:
 
   proxy:
     container_name: nginx
-    restart: unless-stopped
+    restart: always
     image: nginx:alpine
     ports:
       - "80:80"
@@ -42,7 +42,7 @@ services:
 
   proxy-generator:
     container_name: nginx-proxy-gen
-    restart: unless-stopped
+    restart: always
     image: jwilder/docker-gen
     depends_on:
       - proxy
@@ -57,7 +57,7 @@ services:
 
   certificates:
     container_name: nginx-letsencrypt
-    restart: unless-stopped
+    restart: always
     image: jrcs/letsencrypt-nginx-proxy-companion
     depends_on:
       - proxy
