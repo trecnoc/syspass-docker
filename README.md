@@ -15,6 +15,7 @@ This project enables a Docker-based deployment of [Syspass](https://www.syspass.
 
 ## Instructions
 Create the following files that contain configuration information not already defined in `docker-compose`:
+- `./.env` should contain definitions for `SUBNET` and `SYSPASS_IP`. `SUBNET` is the network specification for the default network that `docker-compose` will use for Syspass (e.g. `172.30.0.0/24`), and `SYSPASS_IP` is an IPv4 address _within that subnet_ that `docker-compose` should assign to the `syspass` container (e.g. `172.30.0.10` if using the earlier value for `SUBNET`). This is _required_ to avoid an issue where Syspass can no longer authenticate against the database that was initialized if the IP address of the Syspass container ever changes (e.g. due to running `docker-compose down` and `docker-compose up` again). This issue is discussed but unresolved [here](https://github.com/nuxsmin/sysPass/issues/1299).
 - `./mariadb/mariadb-variables.env` should contain a definition for `MYSQL_ROOT_PASSWORD` with the root password of the MariaDB instance. You will need this password during Syspass setup - choose something secure.
 - `./syspass/syspass-variables.env` should contain definitions for:
   - `VIRTUAL_HOST` and `LETSENCRYPT_HOST` which are the publicly accessible hostname of your Syspass instance, e.g. `syspass.yourdomainhere.com`.
