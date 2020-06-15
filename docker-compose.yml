@@ -4,6 +4,9 @@ services:
     container_name: syspass
     image: syspass/syspass:3.1.2
     restart: always
+    networks:
+      default:
+        ipv4_address: ${SYSPASS_IP}
     expose:
       - "443"
     volumes:
@@ -79,4 +82,11 @@ volumes:
   nginx-certs: {}
   nginx-vhost: {}
   nginx-html: {}
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+      - subnet: ${SUBNET}
 
